@@ -9,13 +9,10 @@ class Todo extends Component {
             isEditing: false
         }
         
-        this.edit = this.edit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    edit() {
-        this.setState({ isEditing: true });
+        this.edit = this.edit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     handleChange(e) {
@@ -28,6 +25,14 @@ class Todo extends Component {
         this.setState({ isEditing: false });
     }
 
+    edit() {
+        this.setState({ isEditing: true });
+    }
+
+    handleDelete() {
+        this.props.deleteTodo(this.props.id);
+    }
+
     render() {
         return(
             this.state.isEditing ? (
@@ -37,11 +42,11 @@ class Todo extends Component {
                     <button>Save</button>
                 </form>
             ) : (
-                <div className="Todo">
-                    <span>{this.props.task}</span>
+                <ul className="Todo">
+                    <li>{this.props.task}</li>
                     <button onClick={this.edit}>Edit</button>
-                    <button onClick={this.props.deleteTodo}>X</button>
-                </div>
+                    <button onClick={this.handleDelete}>X</button>
+                </ul>
             )
             
         )
