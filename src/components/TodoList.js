@@ -14,12 +14,22 @@ class TodoList extends Component {
         }
 
         this.createNewTodo = this.createNewTodo.bind(this);
+        this.editTodo = this.editTodo.bind(this);
         this.deleteTodo = this.deleteTodo.bind(this);
     }
 
     createNewTodo(newTask) {
         let newTodo = {...newTask, id: uuidv4() };
         this.setState(st => ({ todos: [...st.todos, newTodo] }));
+    }
+
+    editTodo(todoId, editedTask) {
+        this.setState({ todos: this.state.todos.map(todo => {
+            if(todo.id === todoId) {
+                todo.task = editedTask;
+            }
+            return todo;
+        })})
     }
 
     deleteTodo(todoId) {
@@ -30,7 +40,7 @@ class TodoList extends Component {
         return(
             <div className="TodoList">
                 <h1>Todo List</h1>
-                {this.state.todos.map(todo => <Todo key={todo.id} task={todo.task} deleteTodo={() => this.deleteTodo(todo.id)} />)}
+                {this.state.todos.map(todo => <Todo key={todo.id} task={todo.task} editTodo={(editedTask) => this.editTodo(todo.id, editedTask)} deleteTodo={() => this.deleteTodo(todo.id)} />)}
                 <NewTodoForm createNewTodo={this.createNewTodo} />
             </div>
 
