@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "./Todo.css";
+import './Todo.css';
 
 class Todo extends Component {
     constructor(props) {
@@ -42,20 +42,24 @@ class Todo extends Component {
     render() {
         return(
             this.state.isEditing ? (
-                <form onSubmit={this.handleUpdate}>
-                    <input name="task" value={this.state.task} onChange={this.handleChange} />
-                    <button>Save</button>
-                </form>
+                <div className="Todo">
+                    <form className="Todo-edit-form" onSubmit={this.handleUpdate}>
+                        <input name="task" value={this.state.task} onChange={this.handleChange} />
+                        <button>Save</button>
+                    </form>
+                </div>
             ) : (
-                <ul className="Todo">
-                    <li className={this.props.completed ? "completed" : ""} onClick={this.handleToggle}>{this.props.task}</li>
-                    <button onClick={this.toggleEditForm}>Edit</button>
-                    <button onClick={this.handleDelete}>X</button>
-                </ul>
+                <div className="Todo">
+                    <li className={this.props.completed ? "Todo-task completed" : "Todo-task"} onClick={this.handleToggle}>{this.props.task}</li>
+                    <div className="Todo-buttons">
+                        <button onClick={this.toggleEditForm}><i className="fas fa-pen"></i></button>
+                        <button onClick={this.handleDelete}><i className="fas fa-trash"></i></button>
+                    </div>
+                </div>
             )
             
         )
-    } 
+    }
 }
 
 export default Todo;
