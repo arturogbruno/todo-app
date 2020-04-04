@@ -11,7 +11,8 @@ class TodoList extends Component {
         }
 
         this.createTodo = this.createTodo.bind(this);
-        this.editTodo = this.editTodo.bind(this);
+        this.updateTodo = this.updateTodo.bind(this);
+        this.toggleCompletion = this.toggleCompletion.bind(this);
         this.deleteTodo = this.deleteTodo.bind(this);
     }
 
@@ -19,13 +20,12 @@ class TodoList extends Component {
         this.setState({ todos: [...this.state.todos, newTodo] });
     }
 
-    editTodo(todoId, editedTask) {
-        this.setState({ todos: this.state.todos.map(todo => {
-            if(todo.id === todoId) {
-                todo.task = editedTask;
-            }
-            return todo;
-        })})
+    updateTodo(id, updatedTask) {
+        this.setState({ todos: this.state.todos.map(todo => todo.id === id ? {...todo, task: updatedTask} : todo) });
+    }
+
+    toggleCompletion(id) {
+        this.setState({ todos: this.state.todos.map(todo => todo.id === id ? {...todo, completed: !todo.completed} : todo) });
     }
 
     deleteTodo(id) {
@@ -36,7 +36,7 @@ class TodoList extends Component {
         return(
             <div className="TodoList">
                 <h1>Todo App</h1>  
-                {this.state.todos.map(todo => <Todo key={todo.id} id={todo.id} task={todo.task} editTodo={(editedTask) => this.editTodo(todo.id, editedTask)} deleteTodo={this.deleteTodo} />)}
+                {this.state.todos.map(todo => <Todo key={todo.id} id={todo.id} task={todo.task} completed={todo.completed} updateTodo={this.updateTodo} toggleCompletion={this.toggleCompletion} deleteTodo={this.deleteTodo} />)}
                 <NewTodoForm createTodo={this.createTodo} />
             </div>
 
